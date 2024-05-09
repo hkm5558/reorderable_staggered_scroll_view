@@ -80,6 +80,7 @@ class DragContainer<T extends ReorderableStaggeredScrollViewListItem>
   final double edgeScroll;
   final int edgeScrollSpeedMilliseconds;
   final bool isDrag;
+  final bool disableMultiDrag;
   final List<T>? isNotDragList;
 
   const DragContainer({
@@ -107,6 +108,7 @@ class DragContainer<T extends ReorderableStaggeredScrollViewListItem>
     this.edgeScrollSpeedMilliseconds = 100,
     this.isDrag = true,
     this.isNotDragList,
+    this.disableMultiDrag = false,
     super.key,
   });
 
@@ -319,6 +321,8 @@ class _DragContainerState<T extends ReorderableStaggeredScrollViewListItem>
             feedback: setFeedback(data, father),
             axis: widget.axis,
             data: data,
+            maxSimultaneousDrags:
+                widget.disableMultiDrag && isDragStart ? 0 : null,
             onDragStarted: () {
               dragData = data;
               setDragStart();
@@ -349,6 +353,8 @@ class _DragContainerState<T extends ReorderableStaggeredScrollViewListItem>
             feedback: setFeedback(data, father),
             axis: widget.axis,
             data: data,
+            maxSimultaneousDrags:
+                widget.disableMultiDrag && isDragStart ? 0 : null,
             onDragStarted: () {
               dragData = data;
               setDragStart();
